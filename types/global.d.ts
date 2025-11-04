@@ -8,18 +8,6 @@ declare global {
         fullName: string;
         email: string;
         password: string;
-        country: string;
-        investmentGoals: string;
-        riskTolerance: string;
-        preferredIndustry: string;
-    };
-
-    type CountrySelectProps = {
-        name: string;
-        label: string;
-        control: Control;
-        error?: FieldError;
-        required?: boolean;
     };
 
     type FormInputProps = {
@@ -59,12 +47,6 @@ declare global {
         renderAs?: 'button' | 'text';
         label?: string;
         initialStocks: StockWithWatchlistStatus[];
-    };
-
-    type WelcomeEmailData = {
-        email: string;
-        name: string;
-        intro: string;
     };
 
     type User = {

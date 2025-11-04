@@ -4,7 +4,7 @@ import { getDateRange, validateArticle, formatArticle } from '@/lib/utils';
 import { POPULAR_STOCK_SYMBOLS } from '@/lib/constants';
 import { cache } from 'react';
 
-const FINNHUB_BASE_URL = 'https://finnhub.io/api/v1';
+const FINNHUB_BASE_URL = process.env.FINNHUB_BASE_URL;
 const NEXT_PUBLIC_FINNHUB_API_KEY = process.env.NEXT_PUBLIC_FINNHUB_API_KEY ?? '';
 
 async function fetchJSON<T>(url: string, revalidateSeconds?: number): Promise<T> {
