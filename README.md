@@ -1,5 +1,5 @@
 # Signalist
-The latest version of [my developer portfolio](https://seancurrlin.com/) built with React 19 and ThreeJS.
+A stock market analysis app that lets users create custom watchlists for better informed trading decisions. Built with NextJS, Tailwind CSS, TypeScript, MongoDB, TradingView, and Finnhub.
 
 ![banner_image](public/assets/images/dashboard.png)
 
@@ -8,4 +8,5 @@ The latest version of [my developer portfolio](https://seancurrlin.com/) built w
 * Tailwind CSS
 * TypeScript
 * MongoDB
+* TradingView
 * Finnhub API
