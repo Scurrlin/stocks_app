@@ -130,10 +130,6 @@ declare global {
         peRatio?: string;
     };
 
-    type AlertsListProps = {
-        alertData: Alert[] | undefined;
-    };
-
     type MarketNewsArticle = {
         id: number;
         headline: string;
@@ -159,22 +155,6 @@ declare global {
         className?: string;
     };
 
-    type AlertData = {
-        symbol: string;
-        company: string;
-        alertName: string;
-        alertType: 'upper' | 'lower';
-        threshold: string;
-    };
-
-    type AlertModalProps = {
-        alertId?: string;
-        alertData?: AlertData;
-        action?: string;
-        open: boolean;
-        setOpen: (open: boolean) => void;
-    };
-
     type RawNewsArticle = {
         id: number;
         headline?: string;
@@ -185,17 +165,6 @@ declare global {
         image?: string;
         category?: string;
         related?: string;
-    };
-
-    type Alert = {
-        id: string;
-        symbol: string;
-        company: string;
-        alertName: string;
-        currentPrice: number;
-        alertType: 'upper' | 'lower';
-        threshold: number;
-        changePercent?: number;
     };
 }
 
