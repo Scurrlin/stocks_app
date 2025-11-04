@@ -8,9 +8,18 @@ export const signUpWithEmail = async ({ email, password, fullName }: SignUpFormD
         const response = await auth.api.signUpEmail({ body: { email, password, name: fullName } })
 
         return { success: true, data: response }
-    } catch (e) {
+    } catch (e: any) {
         console.log('Sign up failed', e)
-        return { success: false, error: 'Sign up failed' }
+        
+        // Extract the specific error message from Better Auth
+        const errorMessage = e?.message || e?.body?.message || 'Failed to create account';
+        
+        // Check for common error scenarios
+        if (errorMessage.toLowerCase().includes('already') || errorMessage.toLowerCase().includes('exists')) {
+            return { success: false, error: 'An account with this email already exists' }
+        }
+        
+        return { success: false, error: errorMessage }
     }
 }
 
@@ -19,9 +28,13 @@ export const signInWithEmail = async ({ email, password }: SignInFormData) => {
         const response = await auth.api.signInEmail({ body: { email, password } })
 
         return { success: true, data: response }
-    } catch (e) {
+    } catch (e: any) {
         console.log('Sign in failed', e)
-        return { success: false, error: 'Sign in failed' }
+        
+        // Extract the specific error message from Better Auth
+        const errorMessage = e?.message || e?.body?.message || 'Invalid email or password';
+        
+        return { success: false, error: errorMessage }
     }
 }
 
