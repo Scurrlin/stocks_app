@@ -71,6 +71,7 @@ const UserDropdown = ({ user, initialStocks, isGuest = false }: {user: User, ini
                                 Sign In
                             </Link>
                         </DropdownMenuItem>
+                        <DropdownMenuSeparator className="hidden sm:block bg-gray-600"/>
                         
                         {/* Mobile: Show Sign Up, Sign In, Dashboard, and Search */}
                         <div className="sm:hidden">
@@ -94,10 +95,10 @@ const UserDropdown = ({ user, initialStocks, isGuest = false }: {user: User, ini
                     <>
                         {/* Authenticated users see Logout */}
                         <DropdownMenuItem onClick={handleSignOut} className="text-gray-100 text-md font-medium focus:bg-transparent focus:text-yellow-500 transition-colors cursor-pointer">
-                            <LogOut className="h-4 w-4 mr-2 hidden sm:block" />
+                            <LogOut className="h-4 w-4 mr-2" />
                             Logout
                         </DropdownMenuItem>
-                        <DropdownMenuSeparator className="hidden sm:block bg-gray-600"/>
+                        <DropdownMenuSeparator className="bg-gray-600"/>
                         <nav className="sm:hidden">
                             <NavItems initialStocks={initialStocks} isGuest={false} />
                         </nav>
