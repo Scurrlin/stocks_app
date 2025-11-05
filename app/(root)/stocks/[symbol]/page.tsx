@@ -1,5 +1,5 @@
 import TradingViewWidget from "@/components/TradingViewWidget";
-import WatchlistButton from "@/components/WatchlistButton";
+import StockDetailsClient from "@/components/StockDetailsClient";
 import {
   SYMBOL_INFO_WIDGET_CONFIG,
   CANDLE_CHART_WIDGET_CONFIG,
@@ -11,6 +11,7 @@ import {
 import { cookies } from "next/headers";
 import { auth } from "@/lib/better-auth/auth";
 import { headers } from "next/headers";
+import { getWatchlistSymbolsByEmail } from "@/lib/actions/watchlist.actions";
 
 export default async function StockDetails({ params }: StockDetailsPageProps) {
   const { symbol } = await params;
@@ -21,6 +22,16 @@ export default async function StockDetails({ params }: StockDetailsPageProps) {
   const guestMode = cookieStore.get('guest_mode');
   const session = await auth.api.getSession({ headers: await headers() });
   const isGuest = !session?.user && !!guestMode;
+
+  // Get user's watchlist to check if this stock is in it
+  let isInWatchlist = false;
+  let userId: string | undefined;
+  
+  if (session?.user?.email) {
+    userId = session.user.id;
+    const watchlistSymbols = await getWatchlistSymbolsByEmail(session.user.email);
+    isInWatchlist = watchlistSymbols.includes(symbol.toUpperCase());
+  }
 
   return (
     <div className="flex min-h-screen p-4 md:p-6 lg:p-8">
@@ -50,14 +61,13 @@ export default async function StockDetails({ params }: StockDetailsPageProps) {
 
         {/* Right column */}
         <div className="flex flex-col gap-6">
-          <div className="flex items-center justify-between">
-            <WatchlistButton 
-              symbol={symbol.toUpperCase()} 
-              company={symbol.toUpperCase()} 
-              isInWatchlist={false}
-              isGuest={isGuest}
-            />
-          </div>
+          <StockDetailsClient
+            symbol={symbol}
+            company={symbol}
+            isInWatchlist={isInWatchlist}
+            isGuest={isGuest}
+            userId={userId}
+          />
 
           <TradingViewWidget
             scriptUrl={`${scriptUrl}technical-analysis.js`}

@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
@@ -11,8 +11,11 @@ const WatchlistButton = ({
   type = "button",
   onWatchlistChange,
   isGuest = false,
+  userId,
 }: WatchlistButtonProps) => {
   const [added, setAdded] = useState<boolean>(!!isInWatchlist);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
   const label = useMemo(() => {
@@ -20,7 +23,7 @@ const WatchlistButton = ({
     return added ? "Remove from Watchlist" : "Add to Watchlist";
   }, [added, type]);
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (isGuest) {
       toast.info('Create a Free Account', {
         description: 'Sign up to add to your Watchlist',
@@ -32,9 +35,28 @@ const WatchlistButton = ({
       return;
     }
 
+    if (isLoading) return;
+
     const next = !added;
+    
+    // Optimistic update
     setAdded(next);
-    onWatchlistChange?.(symbol, next);
+    setIsLoading(true);
+
+    // Call the callback if provided (for custom handling)
+    if (onWatchlistChange) {
+      onWatchlistChange(symbol, next);
+      setIsLoading(false);
+    } else {
+      // Default behavior: show toast
+      toast.success(next ? 'Added to watchlist' : 'Removed from watchlist');
+      
+      // Refresh the page to update watchlist data
+      startTransition(() => {
+        router.refresh();
+        setIsLoading(false);
+      });
+    }
   };
 
   if (type === "icon") {
@@ -42,8 +64,9 @@ const WatchlistButton = ({
       <button
         title={isGuest ? 'Sign up to add to your Watchlist' : (added ? `Remove ${symbol} from watchlist` : `Add ${symbol} to watchlist`)}
         aria-label={isGuest ? 'Sign up to add to your Watchlist' : (added ? `Remove ${symbol} from watchlist` : `Add ${symbol} to watchlist`)}
-        className={`watchlist-icon-btn ${added ? "watchlist-icon-added" : ""} ${isGuest ? "opacity-50 cursor-pointer" : ""}`}
+        className={`watchlist-icon-btn ${added ? "watchlist-icon-added" : ""} ${isGuest ? "opacity-50 cursor-pointer" : ""} ${isLoading ? "opacity-50 cursor-wait" : ""}`}
         onClick={handleClick}
+        disabled={isLoading}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -65,8 +88,9 @@ const WatchlistButton = ({
 
   return (
     <button 
-      className={`watchlist-btn ${added ? "watchlist-remove" : ""} ${isGuest ? "opacity-75" : ""}`} 
+      className={`watchlist-btn ${added ? "watchlist-remove" : ""} ${isGuest ? "opacity-75" : ""} ${isLoading ? "opacity-50 cursor-wait" : ""}`} 
       onClick={handleClick}
+      disabled={isLoading}
     >
       {showTrashIcon && added ? (
         <svg

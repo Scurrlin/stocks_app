@@ -445,3 +445,14 @@
 .scrollbar-hide-default::-webkit-scrollbar-thumb:hover {
   background-color: #9095A1;
 }
+
+/* Watchlist Card Styles */
+.watchlist-card {
+  @apply relative p-4 rounded-xl bg-[#16181D] border border-gray-800 
+         hover:border-gray-700 transition-all cursor-pointer;
+}
+
+.watchlist-card-star {
+  @apply opacity-100 transition-opacity hover:scale-110 active:scale-95 
+         disabled:opacity-50 disabled:cursor-not-allowed;
+}

@@ -21,7 +21,7 @@ const Header = async ({ user, isGuest = false }: { user?: User; isGuest?: boolea
                     <Image src="/assets/icons/logo.svg" alt="Signalist logo" width={140} height={32} className="h-8 w-auto cursor-pointer" />
                 </Link>
                 <nav className="hidden sm:block">
-                    <NavItems initialStocks={initialStocks} />
+                    <NavItems initialStocks={initialStocks} isGuest={isGuest} />
                 </nav>
 
                 <UserDropdown user={displayUser} initialStocks={initialStocks} isGuest={isGuest} />

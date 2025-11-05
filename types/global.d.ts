@@ -92,6 +92,7 @@ declare global {
         type?: 'button' | 'icon';
         onWatchlistChange?: (symbol: string, isAdded: boolean) => void;
         isGuest?: boolean;
+        userId?: string;
     };
 
     type QuoteData = {
@@ -129,6 +130,7 @@ declare global {
         changeFormatted?: string;
         marketCap?: string;
         peRatio?: string;
+        logo?: string;
     };
 
     type MarketNewsArticle = {
