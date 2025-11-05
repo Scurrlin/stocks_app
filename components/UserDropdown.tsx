@@ -61,17 +61,20 @@ const UserDropdown = ({ user, initialStocks, isGuest = false }: {user: User, ini
                 {/* Guest users see Sign Up and Sign In options */}
                 {isGuest ? (
                     <>
-                        <DropdownMenuItem asChild className="text-gray-100 text-md font-medium focus:bg-transparent focus:text-yellow-500 transition-colors cursor-pointer">
-                            <Link href="/sign-up" className="w-full hidden sm:flex">
-                                Sign Up
-                            </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild className="text-gray-100 text-md font-medium focus:bg-transparent focus:text-yellow-500 transition-colors cursor-pointer">
-                            <Link href="/sign-in" className="w-full hidden sm:flex">
-                                Sign In
-                            </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator className="hidden sm:block bg-gray-600"/>
+                        {/* Desktop: Show Sign Up and Sign In */}
+                        <div className="hidden sm:block">
+                            <DropdownMenuItem asChild className="text-gray-100 text-md font-medium focus:bg-transparent focus:text-yellow-500 transition-colors cursor-pointer">
+                                <Link href="/sign-up" className="w-full">
+                                    Sign Up
+                                </Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator className="bg-gray-600"/>
+                            <DropdownMenuItem asChild className="text-gray-100 text-md font-medium focus:bg-transparent focus:text-yellow-500 transition-colors cursor-pointer">
+                                <Link href="/sign-in" className="w-full">
+                                    Sign In
+                                </Link>
+                            </DropdownMenuItem>
+                        </div>
                         
                         {/* Mobile: Show Sign Up, Sign In, Dashboard, and Search */}
                         <div className="sm:hidden">
@@ -80,6 +83,7 @@ const UserDropdown = ({ user, initialStocks, isGuest = false }: {user: User, ini
                                     Sign Up
                                 </Link>
                             </DropdownMenuItem>
+                            <DropdownMenuSeparator className="bg-gray-600"/>
                             <DropdownMenuItem asChild className="text-gray-100 text-md font-medium focus:bg-transparent focus:text-yellow-500 transition-colors cursor-pointer">
                                 <Link href="/sign-in" className="w-full">
                                     Sign In
@@ -98,7 +102,7 @@ const UserDropdown = ({ user, initialStocks, isGuest = false }: {user: User, ini
                             <LogOut className="h-4 w-4 mr-2" />
                             Logout
                         </DropdownMenuItem>
-                        <DropdownMenuSeparator className="bg-gray-600"/>
+                        <DropdownMenuSeparator className="sm:hidden bg-gray-600"/>
                         <nav className="sm:hidden">
                             <NavItems initialStocks={initialStocks} isGuest={false} />
                         </nav>
