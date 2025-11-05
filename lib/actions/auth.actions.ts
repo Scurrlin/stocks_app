@@ -50,12 +50,12 @@ export const signOut = async () => {
 export async function setGuestMode() {
     try {
         const cookieStore = await cookies();
-        // Set a guest cookie that expires in 30 days
+        // Set a guest cookie that expires in 1 hour
         cookieStore.set('guest_mode', 'true', {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'lax',
-            maxAge: 60 * 60 * 24 * 30, // 30 days
+            maxAge: 3600,
             path: '/',
         });
         

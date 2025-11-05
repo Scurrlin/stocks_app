@@ -27,7 +27,7 @@ const Layout = async ({ children }: { children : React.ReactNode }) => {
                     <div className="flex items-center justify-between">
                         <div>
                             <cite className="auth-testimonial-author">- Jim Cramer... probably</cite>
-                            <p className="max-md:text-xs text-gray-500">Investment Pro and Media Personality</p>
+                            <p className="max-md:text-xs text-gray-500">Investment Pro & Media Personality</p>
                         </div>
                         <div className="flex items-center gap-0.5">
                             {[1, 2, 3, 4, 5].map((star) => (
