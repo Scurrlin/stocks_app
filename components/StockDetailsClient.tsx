@@ -37,7 +37,7 @@ export default function StockDetailsClient({
         : await removeFromWatchlist(userId, sym);
 
       if (result.success) {
-        toast.success(isAdded ? 'Added to Watchlist' : 'Removed from Watchlist');
+        toast.success(isAdded ? 'Added to watchlist' : 'Removed from watchlist');
         // Refresh server data
         startTransition(() => {
           router.refresh();

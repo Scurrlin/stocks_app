@@ -20,13 +20,13 @@ const WatchlistButton = ({
 
   const label = useMemo(() => {
     if (type === "icon") return added ? "" : "";
-    return added ? "Remove from Watchlist" : "Add to Watchlist";
+    return added ? "Remove from watchlist" : "Add to watchlist";
   }, [added, type]);
 
   const handleClick = async () => {
     if (isGuest) {
       toast.info('Create a Free Account', {
-        description: 'Sign up to add to your Watchlist',
+        description: 'Sign up to add to your watchlist',
         action: {
           label: 'Sign Up',
           onClick: () => router.push('/sign-up'),
@@ -62,8 +62,8 @@ const WatchlistButton = ({
   if (type === "icon") {
     return (
       <button
-        title={isGuest ? 'Sign up to add to your Watchlist' : (added ? `Remove ${symbol} from watchlist` : `Add ${symbol} to watchlist`)}
-        aria-label={isGuest ? 'Sign up to add to your Watchlist' : (added ? `Remove ${symbol} from watchlist` : `Add ${symbol} to watchlist`)}
+        title={isGuest ? 'Sign up to add to your watchlist' : (added ? `Remove ${symbol} from watchlist` : `Add ${symbol} to watchlist`)}
+        aria-label={isGuest ? 'Sign up to add to your watchlist' : (added ? `Remove ${symbol} from watchlist` : `Add ${symbol} to watchlist`)}
         className={`watchlist-icon-btn ${added ? "watchlist-icon-added" : ""} ${isGuest ? "opacity-50 cursor-pointer" : ""} ${isLoading ? "opacity-50 cursor-wait" : ""}`}
         onClick={handleClick}
         disabled={isLoading}
@@ -104,7 +104,7 @@ const WatchlistButton = ({
           <path strokeLinecap="round" strokeLinejoin="round" d="M6 7h12M9 7V5a1 1 0 011-1h4a1 1 0 011 1v2m-7 4v6m4-6v6m4-6v6" />
         </svg>
       ) : null}
-      <span>{isGuest ? "Sign up to add to your Watchlist" : label}</span>
+      <span>{isGuest ? "Sign up to add to your watchlist" : label}</span>
     </button>
   );
 };

@@ -34,7 +34,7 @@ export default async function WatchlistPage() {
             Your watchlist is empty
           </h1>
           <p className="text-gray-400 mb-8 max-w-md mx-auto">
-            Start building your watchlist by searching for stocks and adding them to track their performance.
+            Start building your watchlist by searching for stocks and adding them to track their performance
           </p>
           <Link
             href="/"
