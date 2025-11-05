@@ -1,0 +1,61 @@
+# ================================
+# .dockerignore
+# ================================
+# Prevents unnecessary files from being copied into the Docker image
+# This makes builds faster and images smaller
+
+# Dependencies (will be installed fresh in container)
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Next.js build output (will be built in container)
+.next/
+out/
+
+# Environment variables (never include secrets in images!)
+.env
+.env.local
+.env*.local
+.env.development
+.env.production
+
+# Git files
+.git
+.gitignore
+.github
+
+# IDE and editor files
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Testing
+coverage
+.nyc_output
+
+# Misc
+README.md
+*.md
+.prettierrc
+.eslintrc*
+eslint.config.mjs
+
+# Docker files themselves
+Dockerfile
+.dockerignore
+docker-compose*.yml
+
+# CI/CD
+.travis.yml
+.gitlab-ci.yml
+.circleci
+
+# Logs
+*.log
+logs
+
