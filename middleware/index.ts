@@ -3,9 +3,11 @@ import { getSessionCookie } from "better-auth/cookies";
 
 export async function middleware(request: NextRequest) {
     const sessionCookie = getSessionCookie(request);
+    const guestCookie = request.cookies.get('guest_mode');
 
-    if (!sessionCookie) {
-        return NextResponse.redirect(new URL("/", request.url));
+    // Allow access if user has either a valid session OR guest mode enabled
+    if (!sessionCookie && !guestCookie) {
+        return NextResponse.redirect(new URL("/sign-in", request.url));
     }
 
     return NextResponse.next();

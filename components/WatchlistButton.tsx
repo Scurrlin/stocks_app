@@ -1,9 +1,7 @@
 "use client";
 import React, { useMemo, useState } from "react";
-
-// Minimal WatchlistButton implementation to satisfy page requirements.
-// This component focuses on UI contract only. It toggles local state and
-// calls onWatchlistChange if provided. Styling hooks match globals.css.
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const WatchlistButton = ({
   symbol,
@@ -12,8 +10,10 @@ const WatchlistButton = ({
   showTrashIcon = false,
   type = "button",
   onWatchlistChange,
+  isGuest = false,
 }: WatchlistButtonProps) => {
   const [added, setAdded] = useState<boolean>(!!isInWatchlist);
+  const router = useRouter();
 
   const label = useMemo(() => {
     if (type === "icon") return added ? "" : "";
@@ -21,6 +21,17 @@ const WatchlistButton = ({
   }, [added, type]);
 
   const handleClick = () => {
+    if (isGuest) {
+      toast.info('Create a Free Account', {
+        description: 'Sign up to add to your Watchlist',
+        action: {
+          label: 'Sign Up',
+          onClick: () => router.push('/sign-up'),
+        },
+      });
+      return;
+    }
+
     const next = !added;
     setAdded(next);
     onWatchlistChange?.(symbol, next);
@@ -29,9 +40,9 @@ const WatchlistButton = ({
   if (type === "icon") {
     return (
       <button
-        title={added ? `Remove ${symbol} from watchlist` : `Add ${symbol} to watchlist`}
-        aria-label={added ? `Remove ${symbol} from watchlist` : `Add ${symbol} to watchlist`}
-        className={`watchlist-icon-btn ${added ? "watchlist-icon-added" : ""}`}
+        title={isGuest ? 'Sign up to add to your Watchlist' : (added ? `Remove ${symbol} from watchlist` : `Add ${symbol} to watchlist`)}
+        aria-label={isGuest ? 'Sign up to add to your Watchlist' : (added ? `Remove ${symbol} from watchlist` : `Add ${symbol} to watchlist`)}
+        className={`watchlist-icon-btn ${added ? "watchlist-icon-added" : ""} ${isGuest ? "opacity-50 cursor-pointer" : ""}`}
         onClick={handleClick}
       >
         <svg
@@ -53,7 +64,10 @@ const WatchlistButton = ({
   }
 
   return (
-    <button className={`watchlist-btn ${added ? "watchlist-remove" : ""}`} onClick={handleClick}>
+    <button 
+      className={`watchlist-btn ${added ? "watchlist-remove" : ""} ${isGuest ? "opacity-75" : ""}`} 
+      onClick={handleClick}
+    >
       {showTrashIcon && added ? (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -66,7 +80,7 @@ const WatchlistButton = ({
           <path strokeLinecap="round" strokeLinejoin="round" d="M6 7h12M9 7V5a1 1 0 011-1h4a1 1 0 011 1v2m-7 4v6m4-6v6m4-6v6" />
         </svg>
       ) : null}
-      <span>{label}</span>
+      <span>{isGuest ? "Sign up to add to your Watchlist" : label}</span>
     </button>
   );
 };

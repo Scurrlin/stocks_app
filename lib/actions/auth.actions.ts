@@ -1,7 +1,7 @@
 'use server';
 
 import {auth} from "@/lib/better-auth/auth";
-import {headers} from "next/headers";
+import {headers, cookies} from "next/headers";
 
 export const signUpWithEmail = async ({ email, password, fullName }: SignUpFormData) => {
     try {
@@ -44,5 +44,24 @@ export const signOut = async () => {
     } catch (e) {
         console.log('Sign out failed', e)
         return { success: false, error: 'Sign out failed' }
+    }
+}
+
+export async function setGuestMode() {
+    try {
+        const cookieStore = await cookies();
+        // Set a guest cookie that expires in 30 days
+        cookieStore.set('guest_mode', 'true', {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'lax',
+            maxAge: 60 * 60 * 24 * 30, // 30 days
+            path: '/',
+        });
+        
+        return { success: true };
+    } catch (error: any) {
+        console.error('Guest mode error:', error);
+        return { success: false, error: error.message || 'Failed to set guest mode' };
     }
 }

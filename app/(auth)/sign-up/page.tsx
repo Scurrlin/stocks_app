@@ -4,12 +4,14 @@ import {useForm} from "react-hook-form";
 import {Button} from "@/components/ui/button";
 import InputField from "@/components/forms/InputField";
 import FooterLink from "@/components/forms/FooterLink";
-import {signUpWithEmail} from "@/lib/actions/auth.actions";
+import {signUpWithEmail, setGuestMode} from "@/lib/actions/auth.actions";
 import {useRouter} from "next/navigation";
 import {toast} from "sonner";
+import { useState } from 'react';
 
 const SignUp = () => {
     const router = useRouter()
+    const [isGuestLoading, setIsGuestLoading] = useState(false);
     const {
         register,
         handleSubmit,
@@ -40,6 +42,25 @@ const SignUp = () => {
             toast.error('Sign up failed', {
                 description: e instanceof Error ? e.message : 'Something went wrong. Please try again.'
             })
+        }
+    }
+
+    const handleGuestMode = async () => {
+        try {
+            setIsGuestLoading(true);
+            const result = await setGuestMode();
+            
+            if (result.success) {
+                toast.success('Welcome! Browse as guest');
+                router.push('/');
+            } else {
+                toast.error('Failed to enter guest mode');
+            }
+        } catch (e) {
+            console.error(e);
+            toast.error('Something went wrong');
+        } finally {
+            setIsGuestLoading(false);
         }
     }
 
@@ -78,6 +99,24 @@ const SignUp = () => {
 
                 <Button type="submit" disabled={isSubmitting} className="yellow-btn w-full mt-5">
                     {isSubmitting ? 'Creating Account...' : 'Create Account'}
+                </Button>
+
+                <div className="relative my-6">
+                    <div className="absolute inset-0 flex items-center">
+                        <span className="w-full border-t border-gray-700" />
+                    </div>
+                    <div className="relative flex justify-center text-xs uppercase">
+                        <span className="bg-[#0A0E27] px-2 text-gray-500">Or</span>
+                    </div>
+                </div>
+
+                <Button 
+                    type="button" 
+                    onClick={handleGuestMode}
+                    disabled={isGuestLoading}
+                    className="yellow-btn w-full"
+                >
+                    {isGuestLoading ? 'Loading...' : 'Continue as Guest'}
                 </Button>
 
                 <FooterLink text="Already have an account?" linkText="Sign in" href="/sign-in" />

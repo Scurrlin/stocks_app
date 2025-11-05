@@ -14,8 +14,9 @@ import {Button} from "@/components/ui/button";
 import {LogOut} from "lucide-react";
 import NavItems from "@/components/NavItems";
 import {signOut} from "@/lib/actions/auth.actions";
+import Link from "next/link";
 
-const UserDropdown = ({ user, initialStocks }: {user: User, initialStocks: StockWithWatchlistStatus[]}) => {
+const UserDropdown = ({ user, initialStocks, isGuest = false }: {user: User, initialStocks: StockWithWatchlistStatus[], isGuest?: boolean}) => {
     const router = useRouter();
 
     const handleSignOut = async () => {
@@ -51,19 +52,57 @@ const UserDropdown = ({ user, initialStocks }: {user: User, initialStocks: Stock
                             <span className='text-base font-medium text-gray-400'>
                                 {user.name}
                             </span>
-                            <span className="text-sm text-gray-500">{user.email}</span>
+                            {!isGuest && <span className="text-sm text-gray-500">{user.email}</span>}
                         </div>
                     </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator className="bg-gray-600"/>
-                <DropdownMenuItem onClick={handleSignOut} className="text-gray-100 text-md font-medium focus:bg-transparent focus:text-yellow-500 transition-colors cursor-pointer">
-                    <LogOut className="h-4 w-4 mr-2 hidden sm:block" />
-                    Logout
-                </DropdownMenuItem>
-                <DropdownMenuSeparator className="hidden sm:block bg-gray-600"/>
-                <nav className="sm:hidden">
-                    <NavItems initialStocks={initialStocks} />
-                </nav>
+                
+                {/* Guest users see Sign Up and Sign In options */}
+                {isGuest ? (
+                    <>
+                        <DropdownMenuItem asChild className="text-gray-100 text-md font-medium focus:bg-transparent focus:text-yellow-500 transition-colors cursor-pointer">
+                            <Link href="/sign-up" className="w-full hidden sm:flex">
+                                Sign Up
+                            </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild className="text-gray-100 text-md font-medium focus:bg-transparent focus:text-yellow-500 transition-colors cursor-pointer">
+                            <Link href="/sign-in" className="w-full hidden sm:flex">
+                                Sign In
+                            </Link>
+                        </DropdownMenuItem>
+                        
+                        {/* Mobile: Show Sign Up, Sign In, Dashboard, and Search */}
+                        <div className="sm:hidden">
+                            <DropdownMenuItem asChild className="text-gray-100 text-md font-medium focus:bg-transparent focus:text-yellow-500 transition-colors cursor-pointer">
+                                <Link href="/sign-up" className="w-full">
+                                    Sign Up
+                                </Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem asChild className="text-gray-100 text-md font-medium focus:bg-transparent focus:text-yellow-500 transition-colors cursor-pointer">
+                                <Link href="/sign-in" className="w-full">
+                                    Sign In
+                                </Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator className="bg-gray-600"/>
+                            <nav>
+                                <NavItems initialStocks={initialStocks} />
+                            </nav>
+                        </div>
+                    </>
+                ) : (
+                    <>
+                        {/* Authenticated users see Logout */}
+                        <DropdownMenuItem onClick={handleSignOut} className="text-gray-100 text-md font-medium focus:bg-transparent focus:text-yellow-500 transition-colors cursor-pointer">
+                            <LogOut className="h-4 w-4 mr-2 hidden sm:block" />
+                            Logout
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator className="hidden sm:block bg-gray-600"/>
+                        <nav className="sm:hidden">
+                            <NavItems initialStocks={initialStocks} />
+                        </nav>
+                    </>
+                )}
             </DropdownMenuContent>
         </DropdownMenu>
     )
