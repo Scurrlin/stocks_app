@@ -23,28 +23,33 @@ const NavItems = ({initialStocks, isGuest = false, inDropdown = false}: { initia
     if (inDropdown) {
         return (
             <>
-                {navItems.map(({ href, label }, index) => (
-                    <div key={href}>
-                        {index > 0 && <DropdownMenuSeparator className="bg-gray-600"/>}
-                        {href === '/search' ? (
-                            <DropdownMenuItem asChild className="text-gray-100 text-md font-medium focus:bg-transparent focus:text-yellow-500 transition-colors cursor-pointer">
-                                <div>
-                                    <SearchCommand
-                                        renderAs="text"
-                                        label="Search"
-                                        initialStocks={initialStocks}
-                                    />
-                                </div>
+                {navItems.map(({ href, label }, index) => {
+                    const isLast = index === navItems.length - 1;
+                    
+                    if(href === '/search') return (
+                        <div key="search-trigger">
+                            <DropdownMenuItem className="text-gray-100 text-md font-medium focus:bg-transparent focus:text-yellow-500 transition-colors cursor-pointer">
+                                <SearchCommand
+                                    renderAs="text"
+                                    label="Search"
+                                    initialStocks={initialStocks}
+                                />
                             </DropdownMenuItem>
-                        ) : (
+                            {!isLast && <DropdownMenuSeparator className="bg-gray-600"/>}
+                        </div>
+                    )
+
+                    return (
+                        <div key={href}>
                             <DropdownMenuItem asChild className="text-gray-100 text-md font-medium focus:bg-transparent focus:text-yellow-500 transition-colors cursor-pointer">
                                 <Link href={href} className="w-full">
                                     {label}
                                 </Link>
                             </DropdownMenuItem>
-                        )}
-                    </div>
-                ))}
+                            {!isLast && <DropdownMenuSeparator className="bg-gray-600"/>}
+                        </div>
+                    )
+                })}
             </>
         )
     }
