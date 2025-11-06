@@ -3,15 +3,6 @@ A [stock market analysis app](https://stocks-app-s2l1.onrender.com/) that lets u
 
 ![banner_image](public/assets/images/dashboard.png)
 
-## Technologies Used
-* NextJS
-* Tailwind CSS
-* TypeScript
-* MongoDB
-* TradingView
-* Finnhub API
-* Docker
-
 ## Running with Docker
 
 ### Build the image
@@ -33,3 +24,12 @@ Ensure your `.env` file includes:
 - `FINNHUB_BASE_URL` - Finnhub base URL
 - `BETTER_AUTH_SECRET` - Better Auth secret
 - `BETTER_AUTH_URL` - Better Auth URL
+
+## Technologies Used
+* NextJS
+* Tailwind CSS
+* TypeScript
+* MongoDB
+* TradingView
+* Finnhub API
+* Docker
