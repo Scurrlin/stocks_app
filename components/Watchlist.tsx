@@ -62,7 +62,7 @@ const Watchlist = ({ initialStocks, userId, showViewAll = true, maxItems }: Watc
         {showViewAll && stocks.length > (maxItems || 0) && (
           <Link
             href="/watchlist"
-            className="text-yellow-500 hover:text-yellow-400 transition-colors text-sm font-medium"
+            className="text-yellow-500 hover:text-yellow-400 transition-colors text-2xl font-semibold"
           >
             View all
           </Link>
@@ -84,4 +84,3 @@ const Watchlist = ({ initialStocks, userId, showViewAll = true, maxItems }: Watc
 };
 
 export default Watchlist;
-
