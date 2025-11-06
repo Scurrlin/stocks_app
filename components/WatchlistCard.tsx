@@ -50,7 +50,7 @@ const WatchlistCard = ({ stock, onRemove, showStar = true }: WatchlistCardProps)
           <button
             onClick={handleRemove}
             disabled={isRemoving}
-            className="watchlist-card-star absolute top-3 right-3 z-10"
+            className="watchlist-card-star absolute top-3 right-3"
             title="Remove from watchlist"
           >
             <svg
@@ -69,7 +69,7 @@ const WatchlistCard = ({ stock, onRemove, showStar = true }: WatchlistCardProps)
         )}
 
         {/* Main horizontal layout */}
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center gap-8">
           {/* Left side - Logo and Ticker */}
           <div className="flex flex-col items-center gap-3">
             {/* Company Icon/Logo */}
@@ -104,8 +104,8 @@ const WatchlistCard = ({ stock, onRemove, showStar = true }: WatchlistCardProps)
             </div>
           </div>
 
-          {/* Right side - Price and Change */}
-          <div className="flex flex-col items-end gap-2">
+          {/* Center - Price and Change */}
+          <div className="flex flex-col items-center gap-2 flex-1">
             {/* Price */}
             <div className="text-white text-3xl font-bold">
               {stock.priceFormatted || '—'}
@@ -125,4 +125,3 @@ const WatchlistCard = ({ stock, onRemove, showStar = true }: WatchlistCardProps)
 };
 
 export default WatchlistCard;
-
