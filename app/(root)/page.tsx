@@ -36,7 +36,6 @@ const Home = async () => {
                     <Watchlist 
                         initialStocks={watchlistStocks}
                         userId={userId!}
-                        showViewAll={true}
                         maxItems={6}
                     />
                 </section>

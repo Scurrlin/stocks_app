@@ -1,7 +1,6 @@
 'use client';
 
 import WatchlistCard from './WatchlistCard';
-import Link from 'next/link';
 import { useState, useTransition } from 'react';
 import { removeFromWatchlist } from '@/lib/actions/watchlist.actions';
 import { toast } from 'sonner';
@@ -10,11 +9,10 @@ import { useRouter } from 'next/navigation';
 interface WatchlistProps {
   initialStocks: StockWithData[];
   userId: string;
-  showViewAll?: boolean;
   maxItems?: number;
 }
 
-const Watchlist = ({ initialStocks, userId, showViewAll = true, maxItems }: WatchlistProps) => {
+const Watchlist = ({ initialStocks, userId, maxItems }: WatchlistProps) => {
   const [stocks, setStocks] = useState(initialStocks);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
@@ -57,16 +55,8 @@ const Watchlist = ({ initialStocks, userId, showViewAll = true, maxItems }: Watc
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
+      <div className="mb-6">
         <h2 className="text-2xl font-bold text-white">Your Watchlist</h2>
-        {showViewAll && stocks.length > (maxItems || 0) && (
-          <Link
-            href="/watchlist"
-            className="text-yellow-500 hover:text-yellow-400 transition-colors text-2xl font-semibold"
-          >
-            View all
-          </Link>
-        )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

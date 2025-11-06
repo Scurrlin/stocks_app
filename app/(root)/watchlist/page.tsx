@@ -52,7 +52,6 @@ export default async function WatchlistPage() {
       <Watchlist
         initialStocks={watchlistStocks}
         userId={userId!}
-        showViewAll={false}
       />
     </div>
   );
