@@ -91,7 +91,7 @@ const UserDropdown = ({ user, initialStocks, isGuest = false }: {user: User, ini
                             </DropdownMenuItem>
                             <DropdownMenuSeparator className="bg-gray-600"/>
                             <nav>
-                                <NavItems initialStocks={initialStocks} isGuest={true} />
+                                <NavItems initialStocks={initialStocks} isGuest={true} inDropdown={true} />
                             </nav>
                         </div>
                     </>
@@ -104,7 +104,7 @@ const UserDropdown = ({ user, initialStocks, isGuest = false }: {user: User, ini
                         </DropdownMenuItem>
                         <DropdownMenuSeparator className="sm:hidden bg-gray-600"/>
                         <nav className="sm:hidden">
-                            <NavItems initialStocks={initialStocks} isGuest={false} />
+                            <NavItems initialStocks={initialStocks} isGuest={false} inDropdown={true} />
                         </nav>
                     </>
                 )}
