@@ -105,15 +105,15 @@ const WatchlistCard = ({ stock, onRemove, showStar = true }: WatchlistCardProps)
           </div>
 
           {/* Center - Price and Change */}
-          <div className="flex flex-col items-center gap-2 flex-1">
+          <div className="flex flex-col items-center justify-center gap-2 flex-1">
             {/* Price */}
-            <div className="text-white text-3xl font-bold">
+            <div className="text-white text-3xl font-bold text-center">
               {stock.priceFormatted || '—'}
             </div>
 
             {/* Change */}
             {stock.changePercent !== undefined && (
-              <div className={`text-base font-medium ${changeColor}`}>
+              <div className={`text-base font-medium text-center ${changeColor}`}>
                 {isPositive ? '+' : ''}{stock.currentPrice ? (stock.currentPrice * (stock.changePercent / 100)).toFixed(2) : '—'} ({stock.changeFormatted || '—'})
               </div>
             )}
