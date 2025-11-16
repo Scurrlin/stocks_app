@@ -5,8 +5,11 @@ export async function middleware(request: NextRequest) {
     const sessionCookie = getSessionCookie(request);
     const guestCookie = request.cookies.get('guest_mode');
 
-    // Allow access if user has either a valid session OR guest mode enabled
-    if (!sessionCookie && !guestCookie) {
+    // Validate guest cookie value\
+    const isValidGuest = guestCookie?.value === 'true';
+
+    // Allow access if user has either a valid session OR valid guest mode
+    if (!sessionCookie && !isValidGuest) {
         return NextResponse.redirect(new URL("/sign-in", request.url));
     }
 

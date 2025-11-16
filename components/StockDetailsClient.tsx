@@ -22,7 +22,7 @@ export default function StockDetailsClient({
   userId,
 }: StockDetailsClientProps) {
   const [inWatchlist, setInWatchlist] = useState(isInWatchlist);
-  const [isPending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
   const router = useRouter();
 
   const handleWatchlistChange = async (sym: string, isAdded: boolean) => {
@@ -47,7 +47,7 @@ export default function StockDetailsClient({
         setInWatchlist(!isAdded);
         toast.error(result.error || 'Something went wrong');
       }
-    } catch (error) {
+    } catch {
       // Revert on error
       setInWatchlist(!isAdded);
       toast.error('Failed to update watchlist');

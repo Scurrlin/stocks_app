@@ -31,7 +31,9 @@ export const connectToDatabase = async () => {
         throw err;
     }
 
-    console.log(`Connected to database ${process.env.NODE_ENV} - ${MONGODB_URI}`);
+    // Redact DB credentials from logs
+    const redactedUri = MONGODB_URI.replace(/\/\/[^@]+@/, '//***:***@');
+    console.log(`Connected to database ${process.env.NODE_ENV} - ${redactedUri}`);
 
     return cached.conn;
 }

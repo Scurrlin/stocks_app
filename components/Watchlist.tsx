@@ -14,7 +14,7 @@ interface WatchlistProps {
 
 const Watchlist = ({ initialStocks, userId, maxItems }: WatchlistProps) => {
   const [stocks, setStocks] = useState(initialStocks);
-  const [isPending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
   const router = useRouter();
 
   const displayStocks = maxItems ? stocks.slice(0, maxItems) : stocks;
