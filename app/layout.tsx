@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner"
 import "./globals.css";
@@ -52,14 +52,15 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://stocks-app-s2l1.onrender.com/",
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-  },
   robots: {
     index: true,
     follow: true,
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
