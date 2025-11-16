@@ -8,11 +8,12 @@ export const signUpWithEmail = async ({ email, password, fullName }: SignUpFormD
         const response = await auth.api.signUpEmail({ body: { email, password, name: fullName } })
 
         return { success: true, data: response }
-    } catch (e: any) {
+    } catch (e: unknown) {
         console.log('Sign up failed', e)
         
         // Extract the specific error message from Better Auth
-        const errorMessage = e?.message || e?.body?.message || 'Failed to create account';
+        const error = e as { message?: string; body?: { message?: string } };
+        const errorMessage = error?.message || error?.body?.message || 'Failed to create account';
         
         // Check for common error scenarios
         if (errorMessage.toLowerCase().includes('already') || errorMessage.toLowerCase().includes('exists')) {
@@ -28,11 +29,12 @@ export const signInWithEmail = async ({ email, password }: SignInFormData) => {
         const response = await auth.api.signInEmail({ body: { email, password } })
 
         return { success: true, data: response }
-    } catch (e: any) {
+    } catch (e: unknown) {
         console.log('Sign in failed', e)
         
         // Extract the specific error message from Better Auth
-        const errorMessage = e?.message || e?.body?.message || 'Invalid email or password';
+        const error = e as { message?: string; body?: { message?: string } };
+        const errorMessage = error?.message || error?.body?.message || 'Invalid email or password';
         
         return { success: false, error: errorMessage }
     }
@@ -60,8 +62,9 @@ export async function setGuestMode() {
         });
         
         return { success: true };
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error('Guest mode error:', error);
-        return { success: false, error: error.message || 'Failed to set guest mode' };
+        const err = error as { message?: string };
+        return { success: false, error: err.message || 'Failed to set guest mode' };
     }
 }

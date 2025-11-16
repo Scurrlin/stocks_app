@@ -57,9 +57,10 @@ export async function addToWatchlist(userId: string, symbol: string, company: st
     });
 
     return { success: true };
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error('addToWatchlist error:', err);
-    return { success: false, error: err.message || 'Failed to add to watchlist' };
+    const error = err as { message?: string };
+    return { success: false, error: error.message || 'Failed to add to watchlist' };
   }
 }
 
@@ -80,9 +81,10 @@ export async function removeFromWatchlist(userId: string, symbol: string) {
     }
 
     return { success: true };
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error('removeFromWatchlist error:', err);
-    return { success: false, error: err.message || 'Failed to remove from watchlist' };
+    const error = err as { message?: string };
+    return { success: false, error: error.message || 'Failed to remove from watchlist' };
   }
 }
 
@@ -131,7 +133,7 @@ export async function getWatchlistWithData(email: string): Promise<StockWithData
 
           const currentPrice = quote?.c;
           const changePercent = quote?.dp;
-          const logo = (profile as any)?.logo || undefined;
+          const logo = (profile as ProfileData & { logo?: string })?.logo || undefined;
 
           // Format the data
           const priceFormatted = currentPrice ? `$${currentPrice.toFixed(2)}` : undefined;

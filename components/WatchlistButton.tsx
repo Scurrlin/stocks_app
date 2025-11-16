@@ -5,13 +5,13 @@ import { useRouter } from "next/navigation";
 
 const WatchlistButton = ({
   symbol,
-  company,
+  company, // eslint-disable-line @typescript-eslint/no-unused-vars
   isInWatchlist,
   showTrashIcon = false,
   type = "button",
   onWatchlistChange,
   isGuest = false,
-  userId,
+  userId, // eslint-disable-line @typescript-eslint/no-unused-vars
 }: WatchlistButtonProps) => {
   const [added, setAdded] = useState<boolean>(!!isInWatchlist);
   const [isLoading, setIsLoading] = useState(false);
