@@ -28,7 +28,10 @@ const NavItems = ({initialStocks, isGuest = false, inDropdown = false}: { initia
                     
                     if(href === '/search') return (
                         <div key="search-trigger">
-                            <DropdownMenuItem className="text-gray-100 text-md font-medium focus:bg-transparent focus:text-yellow-500 transition-colors cursor-pointer">
+                            <DropdownMenuItem 
+                                onSelect={(e) => e.preventDefault()} 
+                                className="text-gray-100 text-md font-medium focus:bg-transparent focus:text-yellow-500 transition-colors cursor-pointer"
+                            >
                                 <SearchCommand
                                     renderAs="text"
                                     label="Search"
