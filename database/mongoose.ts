@@ -20,7 +20,9 @@ export const connectToDatabase = async () => {
 
     if(cached.conn) return cached.conn;
 
-    if(!cached.promise) {
+    const isNewConnection = !cached.promise;
+    
+    if(isNewConnection) {
         cached.promise = mongoose.connect(MONGODB_URI, { bufferCommands: false });
     }
 
@@ -31,9 +33,11 @@ export const connectToDatabase = async () => {
         throw err;
     }
 
-    // Redact DB credentials from logs
-    const redactedUri = MONGODB_URI.replace(/\/\/[^@]+@/, '//***:***@');
-    console.log(`Connected to database ${process.env.NODE_ENV} - ${redactedUri}`);
+    // Only log on new connections
+    if(isNewConnection) {
+        const redactedUri = MONGODB_URI.replace(/\/\/[^@]+@/, '//***:***@');
+        console.log(`Connected to database ${process.env.NODE_ENV} - ${redactedUri}`);
+    }
 
     return cached.conn;
 }

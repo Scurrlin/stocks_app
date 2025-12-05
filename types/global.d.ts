@@ -44,9 +44,12 @@ declare global {
     };
 
     type SearchCommandProps = {
-        renderAs?: 'button' | 'text';
+        renderAs?: 'button' | 'text' | 'hidden';
         label?: string;
         initialStocks: StockWithWatchlistStatus[];
+        onSearchOpen?: () => void;
+        externalOpen?: boolean;
+        onExternalOpenChange?: (open: boolean) => void;
     };
 
     type User = {
@@ -152,7 +155,7 @@ declare global {
     type SearchCommandProps = {
         open?: boolean;
         setOpen?: (open: boolean) => void;
-        renderAs?: 'button' | 'text';
+        renderAs?: 'button' | 'text' | 'hidden';
         buttonLabel?: string;
         buttonVariant?: 'primary' | 'secondary';
         className?: string;

@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from "react";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -15,17 +16,26 @@ import {LogOut} from "lucide-react";
 import NavItems from "@/components/NavItems";
 import {signOut} from "@/lib/actions/auth.actions";
 import Link from "next/link";
+import SearchCommand from "@/components/SearchCommand";
 
 const UserDropdown = ({ user, initialStocks, isGuest = false }: {user: User, initialStocks: StockWithWatchlistStatus[], isGuest?: boolean}) => {
     const router = useRouter();
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [searchOpen, setSearchOpen] = useState(false);
 
     const handleSignOut = async () => {
         await signOut();
         router.push("/sign-in");
     }
 
+    const handleOpenSearch = () => {
+        setDropdownOpen(false);
+        setSearchOpen(true);
+    };
+
     return (
-        <DropdownMenu>
+        <>
+        <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="flex items-center gap-3 text-gray-4 hover:text-yellow-500">
                     <Avatar className="h-8 w-8">
@@ -91,7 +101,7 @@ const UserDropdown = ({ user, initialStocks, isGuest = false }: {user: User, ini
                             </DropdownMenuItem>
                             <DropdownMenuSeparator className="bg-gray-600"/>
                             <nav>
-                                <NavItems initialStocks={initialStocks} isGuest={true} inDropdown={true} />
+                                <NavItems initialStocks={initialStocks} isGuest={true} inDropdown={true} onOpenSearch={handleOpenSearch} />
                             </nav>
                         </div>
                     </>
@@ -104,12 +114,20 @@ const UserDropdown = ({ user, initialStocks, isGuest = false }: {user: User, ini
                         </DropdownMenuItem>
                         <DropdownMenuSeparator className="sm:hidden bg-gray-600"/>
                         <nav className="sm:hidden">
-                            <NavItems initialStocks={initialStocks} isGuest={false} inDropdown={true} />
+                            <NavItems initialStocks={initialStocks} isGuest={false} inDropdown={true} onOpenSearch={handleOpenSearch} />
                         </nav>
                     </>
                 )}
             </DropdownMenuContent>
         </DropdownMenu>
+        
+        <SearchCommand 
+            renderAs="hidden"
+            initialStocks={initialStocks}
+            externalOpen={searchOpen}
+            onExternalOpenChange={setSearchOpen}
+        />
+    </>
     )
 }
 export default UserDropdown

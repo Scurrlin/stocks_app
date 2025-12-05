@@ -6,7 +6,7 @@ import {usePathname} from "next/navigation";
 import SearchCommand from "@/components/SearchCommand";
 import {DropdownMenuItem, DropdownMenuSeparator} from "@/components/ui/dropdown-menu";
 
-const NavItems = ({initialStocks, isGuest = false, inDropdown = false}: { initialStocks: StockWithWatchlistStatus[], isGuest?: boolean, inDropdown?: boolean}) => {
+const NavItems = ({initialStocks, isGuest = false, inDropdown = false, onOpenSearch}: { initialStocks: StockWithWatchlistStatus[], isGuest?: boolean, inDropdown?: boolean, onOpenSearch?: () => void}) => {
     const pathname = usePathname()
 
     const isActive = (path: string) => {
@@ -29,14 +29,10 @@ const NavItems = ({initialStocks, isGuest = false, inDropdown = false}: { initia
                     if(href === '/search') return (
                         <div key="search-trigger">
                             <DropdownMenuItem 
-                                onSelect={(e) => e.preventDefault()} 
+                                onClick={onOpenSearch}
                                 className="text-gray-100 text-md font-medium focus:bg-transparent focus:text-yellow-500 transition-colors cursor-pointer"
                             >
-                                <SearchCommand
-                                    renderAs="text"
-                                    label="Search"
-                                    initialStocks={initialStocks}
-                                />
+                                <span className="w-full block">Search</span>
                             </DropdownMenuItem>
                             {!isLast && <DropdownMenuSeparator className="bg-gray-600"/>}
                         </div>

@@ -8,8 +8,12 @@ import Link from "next/link";
 import {searchStocks} from "@/lib/actions/finnhub.actions";
 import {useDebounce} from "@/hooks/useDebounce";
 
-export default function SearchCommand({ renderAs = 'button', label = 'Add stock', initialStocks }: SearchCommandProps) {
-  const [open, setOpen] = useState(false)
+export default function SearchCommand({ renderAs = 'button', label = 'Add stock', initialStocks, onSearchOpen, externalOpen, onExternalOpenChange }: SearchCommandProps) {
+  const [internalOpen, setInternalOpen] = useState(false)
+  
+  // Use external state if provided, otherwise use internal state
+  const open = externalOpen ?? internalOpen;
+  const setOpen = onExternalOpenChange ?? setInternalOpen;
   const [searchTerm, setSearchTerm] = useState("")
   const [loading, setLoading] = useState(false)
   const [stocks, setStocks] = useState<StockWithWatchlistStatus[]>(initialStocks);
@@ -21,7 +25,7 @@ export default function SearchCommand({ renderAs = 'button', label = 'Add stock'
     const onKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault()
-        setOpen(v => !v)
+        setOpen(!open)
       }
     }
     window.addEventListener("keydown", onKeyDown)
@@ -57,11 +61,11 @@ export default function SearchCommand({ renderAs = 'button', label = 'Add stock'
   return (
     <>
       {renderAs === 'text' ? (
-          <span onClick={() => setOpen(true)} className="search-text w-full block">
+          <span onClick={() => { setOpen(true); onSearchOpen?.(); }} className="search-text w-full block">
             {label}
           </span>
-      ): (
-          <Button onClick={() => setOpen(true)} className="search-btn">
+      ) : renderAs === 'hidden' ? null : (
+          <Button onClick={() => { setOpen(true); onSearchOpen?.(); }} className="search-btn">
             {label}
           </Button>
       )}
