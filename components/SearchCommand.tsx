@@ -57,7 +57,7 @@ export default function SearchCommand({ renderAs = 'button', label = 'Add stock'
   return (
     <>
       {renderAs === 'text' ? (
-          <span onClick={() => setOpen(true)} className="search-text">
+          <span onClick={() => setOpen(true)} className="search-text w-full block">
             {label}
           </span>
       ): (
