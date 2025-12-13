@@ -51,7 +51,7 @@ const SignUp = () => {
             const result = await setGuestMode();
             
             if (result.success) {
-                toast.success('Welcome! Browse as guest');
+                toast.success('Welcome! Feel free to take a look around');
                 router.push('/');
             } else {
                 toast.error('Failed to enter guest mode');
