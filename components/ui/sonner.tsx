@@ -17,6 +17,11 @@ const Toaster = ({ ...props }: ToasterProps) => {
           "--normal-border": "var(--border) !important",
         } as React.CSSProperties
       }
+      toastOptions={{
+        classNames: {
+          description: "!text-current",
+        },
+      }}
       {...props}
     />
   )
