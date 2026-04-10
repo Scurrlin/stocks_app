@@ -100,7 +100,7 @@ export default function SearchCommand({ renderAs = 'button', label = 'Add stock'
                           {stock.name}
                         </div>
                         <div className="text-sm text-gray-500">
-                          {stock.symbol} | {stock.exchange } | {stock.type}
+                          {stock.symbol} | {stock.type}
                         </div>
                       </div>
                     {/*<Star />*/}
